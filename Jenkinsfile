@@ -63,7 +63,16 @@ pipeline {
                 }
             }
         }
-
+stage('Debug AWS') {
+    steps {
+        sh '''
+        whoami
+        pwd
+        aws sts get-caller-identity
+        ls -la ~/.aws
+        '''
+    }
+}
         stage('Configure EKS') {
 
             steps {
