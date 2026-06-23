@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: spring-boot-app
+  namespace: devops
+
+spec:
+  replicas: 2
+
+  selector:
+    matchLabels:
+      app: spring-boot-app
+
+  template:
+
+    metadata:
+      labels:
+        app: spring-boot-app
+
+    spec:
+
+      containers:
+
+      - name: spring-boot-app
+
+        image: vamsi0497/springboot:replaceImageTag
+
+        imagePullPolicy: Always
+
+        ports:
+        - containerPort: 8081
+
+        envFrom:
+        - configMapRef:
+            name: springboot-config
+
+        resources:
+
+          requests:
+            cpu: "200m"
+            memory: "256Mi"
+
+          limits:
+            cpu: "500m"
+            memory: "512Mi"
+
+        livenessProbe:
+
+          httpGet:
+            path: /employees/health
+            port: 8081
+
+          initialDelaySeconds: 20
+          periodSeconds: 10
+
+        readinessProbe:
+
+          httpGet:
+            path: /employees/health
+            port: 8081
+
+          initialDelaySeconds: 10
+          periodSeconds: 5
