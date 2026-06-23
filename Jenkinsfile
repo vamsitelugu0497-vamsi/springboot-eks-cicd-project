@@ -3,15 +3,13 @@ pipeline {
     agent any
 
     environment {
+    IMAGE_NAME = "vamsi0497/springboot"
+    AWS_REGION = "us-east-1"
+    EKS_CLUSTER = "devops-eks"
 
-        IMAGE_NAME = "vamsi0497/springboot"
-
-        AWS_REGION = "us-east-1"
-
-        EKS_CLUSTER = "devops-eks"
-
-        SONAR_HOST = "http://172.31.14.10:9000"
-    }
+    AWS_SHARED_CREDENTIALS_FILE = "/var/lib/jenkins/.aws/credentials"
+    AWS_CONFIG_FILE = "/var/lib/jenkins/.aws/config"
+}
 
     stages {
 
@@ -66,10 +64,10 @@ pipeline {
 stage('Debug AWS') {
     steps {
         sh '''
-        whoami
-        pwd
+        echo $AWS_SHARED_CREDENTIALS_FILE
+        echo $AWS_CONFIG_FILE
+
         aws sts get-caller-identity
-        ls -la ~/.aws
         '''
     }
 }
