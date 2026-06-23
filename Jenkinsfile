@@ -33,28 +33,15 @@ pipeline {
                 '''
             }
         }
-
-        stage('SonarQube Scan') {
-
-            steps {
-
-                withCredentials([
-                    string(
-                        credentialsId: 'sonar',
-                        variable: 'SONAR_TOKEN'
-                    )
-                ]) {
-
-                    sh """
-                    mvn sonar:sonar \
-                    -Dsonar.projectKey=springboot \
-                    -Dsonar.host.url=${SONAR_HOST} \
-                    -Dsonar.token=${SONAR_TOKEN}
-                    """
-                }
-            }
-        }
-
+stage('SonarQube Scan') {
+    steps {
+        sh '''
+        mvn sonar:sonar \
+        -Dsonar.projectKey=springboot \
+        -Dsonar.host.url=http://localhost:9000
+        '''
+    }
+}
         stage('Docker Build') {
 
             steps {
