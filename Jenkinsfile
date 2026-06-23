@@ -33,15 +33,7 @@ pipeline {
                 '''
             }
         }
-stage('SonarQube Scan') {
-    steps {
-        sh '''
-        mvn sonar:sonar \
-        -Dsonar.projectKey=springboot \
-        -Dsonar.host.url=http://localhost:9000
-        '''
-    }
-}
+
         stage('Docker Build') {
 
             steps {
