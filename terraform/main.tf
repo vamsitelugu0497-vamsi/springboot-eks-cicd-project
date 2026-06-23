@@ -73,7 +73,7 @@ module "eks" {
 
     devops_nodes = {
 
-      instance_types = ["t3.medium"]
+      instance_types = ["t3.micro"]
 
       min_size     = 2
       max_size     = 4
